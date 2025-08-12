@@ -1,0 +1,142 @@
+/* 
+    NOTE: This concept is designed to use the "W95FA" font.
+    Please download it from a source like FontsArena and place the .woff2 file
+    in the 'assets' directory, then uncomment the @font-face rule below.
+*/
+/*
+@font-face {
+    font-family: 'W95FA';
+    src: url('assets/w95fa.woff2') format('woff2');
+}
+*/
+
+body {
+    background-color: #008080;
+    font-family: 'W95FA', 'monospace'; /* Fallback to monospace */
+    font-size: 16px;
+    margin: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.desktop {
+    width: 100%;
+    height: calc(100% - 35px);
+    position: relative;
+}
+
+/* --- Windows --- */
+.window {
+    position: absolute;
+    background-color: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    box-shadow: 2px 2px 3px rgba(0,0,0,0.4);
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+.window.active { z-index: 20; }
+.hidden { display: none; }
+
+.title-bar {
+    background: linear-gradient(to right, #000080, #1084d0);
+    color: white;
+    padding: 3px 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: grab;
+}
+.title-bar:active { cursor: grabbing; }
+.title-icon { width: 16px; height: 16px; margin-right: 5px; }
+.title { flex-grow: 1; }
+.buttons { display: flex; }
+.close-btn {
+    width: 18px; height: 18px;
+    background-color: #c0c0c0;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    font-family: 'monospace';
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.content { padding: 10px; }
+.content.video-content { padding: 0; background: #000; }
+.content iframe { display: block; width: 100%; height: auto; }
+
+/* --- Desktop Icons --- */
+.desktop-icon {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 80px;
+    text-align: center;
+}
+.desktop-icon:nth-of-type(1) { top: 20px; left: 20px; }
+.desktop-icon:nth-of-type(2) { top: 120px; left: 20px; }
+.desktop-icon:nth-of-type(3) { top: 220px; left: 20px; }
+.desktop-icon:nth-of-type(4) { top: 320px; left: 20px; }
+
+.desktop-icon img { width: 48px; height: 48px; }
+.desktop-icon span { padding: 1px 3px; }
+.desktop-icon:hover span { background-color: #000080; border: 1px dotted #fff; }
+
+/* --- Taskbar --- */
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    box-sizing: border-box;
+}
+#start-button {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    padding: 3px 8px;
+    cursor: pointer;
+}
+#start-button:active { border-style: solid; border-width: 1px; border-color: #404040 #fff #fff #404040; }
+#start-button img { height: 20px; margin-right: 5px; }
+#start-button span { font-weight: bold; }
+
+#phrase-ticker {
+    margin-left: 15px;
+    padding: 3px 10px;
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#time {
+    padding: 3px 10px;
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    margin-left: 15px;
+}
