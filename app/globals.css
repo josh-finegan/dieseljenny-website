@@ -1,10 +1,1 @@
 @import "tailwindcss";
-
-@theme {
-  --font-family-sans: var(--font-brand), sans-serif;
-}
-
-body {
-  background-color: #000; /* Black */
-  color: #fff; /* White */
-}

@@ -1,0 +1,44 @@
+.landingBody {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Aptos', sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.monolithContainer {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.monolithContainer .logo img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 3rem;
+}
+
+.monolithContainer .links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.monolithContainer .links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2rem;
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.monolithContainer .links a:hover {
+    color: #888;
+    letter-spacing: 0.3rem;
+}
