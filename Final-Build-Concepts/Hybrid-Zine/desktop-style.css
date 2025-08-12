@@ -10,7 +10,7 @@
 }
 */
 
-.desktop-page {
+body {
     background-color: #008080;
     font-family: 'W95FA', 'monospace'; /* Fallback to monospace */
     font-size: 16px;
@@ -20,14 +20,14 @@
     width: 100vw;
 }
 
-.desktop-page .desktop {
+.desktop {
     width: 100%;
     height: calc(100% - 35px);
     position: relative;
 }
 
 /* --- Windows --- */
-.desktop-page .window {
+.window {
     position: absolute;
     background-color: #c0c0c0;
     border-top: 2px solid #ffffff;
@@ -39,10 +39,10 @@
     display: flex;
     flex-direction: column;
 }
-.desktop-page .window.active { z-index: 20; }
-.desktop-page .hidden { display: none; }
+.window.active { z-index: 20; }
+.hidden { display: none; }
 
-.desktop-page .title-bar {
+.title-bar {
     background: linear-gradient(to right, #000080, #1084d0);
     color: white;
     padding: 3px 5px;
@@ -51,11 +51,11 @@
     align-items: center;
     cursor: grab;
 }
-.desktop-page .title-bar:active { cursor: grabbing; }
-.desktop-page .title-icon { width: 16px; height: 16px; margin-right: 5px; }
-.desktop-page .title { flex-grow: 1; }
-.desktop-page .buttons { display: flex; }
-.desktop-page .close-btn {
+.title-bar:active { cursor: grabbing; }
+.title-icon { width: 16px; height: 16px; margin-right: 5px; }
+.title { flex-grow: 1; }
+.buttons { display: flex; }
+.close-btn {
     width: 18px; height: 18px;
     background-color: #c0c0c0;
     border-top: 1px solid #ffffff;
@@ -68,12 +68,12 @@
     cursor: pointer;
 }
 
-.desktop-page .content { padding: 10px; }
-.desktop-page .content.video-content { padding: 0; background: #000; }
-.desktop-page .content iframe { display: block; width: 100%; height: auto; }
+.content { padding: 10px; }
+.content.video-content { padding: 0; background: #000; }
+.content iframe { display: block; width: 100%; height: auto; }
 
 /* --- Desktop Icons --- */
-.desktop-page .desktop-icon {
+.desktop-icon {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -86,30 +86,30 @@
     width: 80px;
     text-align: center;
 }
-.desktop-page #icon-bio { top: 20px; left: 20px; }
-.desktop-page #icon-music { top: 120px; left: 25px; }
-.desktop-page #icon-video { top: 220px; left: 20px; }
-.desktop-page #icon-insta { top: 320px; left: 22px; }
-.desktop-page #icon-bandcamp { top: 20px; left: 120px; }
-.desktop-page #icon-facebook { top: 120px; left: 125px; }
+#icon-bio { top: 20px; left: 20px; }
+#icon-music { top: 120px; left: 25px; }
+#icon-video { top: 220px; left: 20px; }
+#icon-insta { top: 320px; left: 22px; }
+#icon-bandcamp { top: 20px; left: 120px; }
+#icon-facebook { top: 120px; left: 125px; }
 
-.desktop-page .desktop-icon img {
+.desktop-icon img {
     width: 48px;
     height: 48px;
     background: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     padding: 4px;
 }
-.desktop-page .desktop-icon span {
+.desktop-icon span {
     padding: 1px 3px;
 }
-.desktop-page .desktop-icon:hover span {
+.desktop-icon:hover span {
     background-color: #000080;
     border: 1px dotted #fff;
 }
 
 /* --- Taskbar --- */
-.desktop-page #taskbar {
+#taskbar {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -122,7 +122,7 @@
     padding: 3px;
     box-sizing: border-box;
 }
-.desktop-page #start-button {
+#start-button {
     display: flex;
     align-items: center;
     border-top: 1px solid #ffffff;
@@ -132,26 +132,26 @@
     padding: 3px 8px;
     cursor: pointer;
 }
-.desktop-page #start-button:active {
+#start-button:active {
     border-style: solid;
     border-width: 1px;
     border-color: #404040 #fff #fff #404040;
 }
-.desktop-page #start-button img {
+#start-button img {
     height: 20px;
     margin-right: 5px;
 }
-.desktop-page #start-button span {
+#start-button span {
     font-weight: bold;
 }
 
-.desktop-page #taskbar-programs {
+#taskbar-programs {
     display: flex;
     height: 100%;
     margin-left: 10px;
 }
 
-.desktop-page .taskbar-tab {
+.taskbar-tab {
     display: flex;
     align-items: center;
     height: 100%;
@@ -164,14 +164,14 @@
     margin-right: 2px;
     cursor: pointer;
 }
-.desktop-page .taskbar-tab.active {
+.taskbar-tab.active {
     border-style: solid;
     border-width: 1px;
     border-color: #404040 #fff #fff #404040;
     background: #a0a0a0;
 }
 
-.desktop-page #phrase-ticker {
+#phrase-ticker {
     margin-left: 15px;
     padding: 3px 10px;
     border: 1px solid #808080;
@@ -181,14 +181,61 @@
     overflow: hidden;
     white-space: nowrap;
 }
-.desktop-page #time {
+#time {
     padding: 3px 10px;
     border: 1px solid #808080;
     border-right-color: #fff;
     border-bottom-color: #fff;
     margin-left: 15px;
 }
-.desktop-page .minimize-btn {
+.minimize-btn {
     font-weight: bold;
     margin-right: 2px;
+}
+
+
+/* --- Taskbar --- */
+#taskbar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background: #c0c0c0;
+    border-top: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    box-sizing: border-box;
+}
+#start-button {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #404040;
+    border-bottom: 1px solid #404040;
+    padding: 3px 8px;
+    cursor: pointer;
+}
+#start-button:active { border-style: solid; border-width: 1px; border-color: #404040 #fff #fff #404040; }
+#start-button img { height: 20px; margin-right: 5px; }
+#start-button span { font-weight: bold; }
+
+#phrase-ticker {
+    margin-left: 15px;
+    padding: 3px 10px;
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#time {
+    padding: 3px 10px;
+    border: 1px solid #808080;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    margin-left: 15px;
 }
