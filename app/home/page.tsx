@@ -140,7 +140,7 @@ const DesktopIcon = ({ icon, name, onClick, href, position }) => {
     return <div className={styles.desktopIcon} style={position} onClick={onClick}>{content}</div>;
 };
 
-const Window = ({ id, title, children, onClose, onMinimize, onMouseDown }) => {
+const Window = ({ id, title, onClose, onMinimize, onMouseDown }) => {
     const content = {
         bio: <>
             <p><strong>DIESEL JENNY</strong></p>
