@@ -1,0 +1,13 @@
+
+
+Bandcamp player embed:
+<iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a></iframe>
+
+YouTube video embed:
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+Social media links:
+https://www.instagram.com/diesel__jenny/
+https://dieseljenny.bandcamp.com/
+https://www.facebook.com/DieselJenny/
