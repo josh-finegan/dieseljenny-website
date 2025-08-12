@@ -69,17 +69,40 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateTaskbar() {
         taskbarPrograms.innerHTML = '';
         windows.forEach(win => {
-            if (!win.classList.contains('hidden')) {
+            if (!win.classList.contains('minimized')) {
                 const tab = document.createElement('div');
                 tab.className = 'taskbar-tab';
                 if (win.classList.contains('active')) {
                     tab.classList.add('active');
                 }
                 tab.textContent = win.querySelector('.title').textContent;
-                tab.onclick = () => setActive(win);
+                tab.onclick = () => {
+                    if (win.classList.contains('minimized')) {
+                        win.classList.remove('minimized');
+                    }
+                    setActive(win);
+                };
                 taskbarPrograms.appendChild(tab);
             }
         });
+    }
+    
+    function minimizeWindow(windowEl) {
+        windowEl.classList.add('hidden');
+        const windowId = windowEl.id;
+        let tab = document.querySelector(`.taskbar-tab[data-window="${windowId}"]`);
+        if (!tab) {
+            tab = document.createElement('div');
+            tab.className = 'taskbar-tab';
+            tab.dataset.window = windowId;
+            tab.textContent = windowEl.querySelector('.title').textContent;
+            tab.onclick = () => {
+                windowEl.classList.remove('hidden');
+                setActive(windowEl);
+                tab.remove();
+            };
+            taskbarPrograms.appendChild(tab);
+        }
     }
 
     windows.forEach(makeDraggable);
@@ -108,19 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.minimize-btn').forEach(button => {
         button.addEventListener('click', () => {
-            const windowEl = document.getElementById(button.dataset.window);
-            windowEl.classList.add('hidden');
-            
-            const tab = document.createElement('div');
-            tab.className = 'taskbar-tab';
-            tab.textContent = windowEl.querySelector('.title').textContent;
-            tab.onclick = () => {
-                windowEl.classList.remove('hidden');
-                setActive(windowEl);
-                taskbarPrograms.removeChild(tab);
-            };
-            taskbarPrograms.appendChild(tab);
-            
+            minimizeWindow(document.getElementById(button.dataset.window));
             playSound(audioFiles[1]);
         });
     });
