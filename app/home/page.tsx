@@ -20,11 +20,13 @@ const initialWindows = {
     video: { title: 'VIDEO.AVI', isOpen: false, isMinimized: false, zIndex: 1, position: { x: 150, y: 150 } },
 };
 
+type WindowId = keyof typeof initialWindows;
+
 export default function HomePage() {
     const [windows, setWindows] = useState(initialWindows);
     const [time, setTime] = useState('');
     const [phrase, setPhrase] = useState(phrases[0]);
-    const audioRef = useRef(null);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
     const [highestZ, setHighestZ] = useState(2);
 
     useEffect(() => {
@@ -34,7 +36,7 @@ export default function HomePage() {
         return () => clearInterval(timer);
     }, []);
 
-    const playSound = (src) => {
+    const playSound = (src: string) => {
         if (audioRef.current) {
             audioRef.current.pause();
         }
@@ -42,7 +44,7 @@ export default function HomePage() {
         audioRef.current.play();
     };
 
-    const bringToFront = (windowId) => {
+    const bringToFront = (windowId: WindowId) => {
         const newZ = highestZ + 1;
         setHighestZ(newZ);
         setWindows(prev => ({
@@ -51,7 +53,7 @@ export default function HomePage() {
         }));
     };
 
-    const handleIconClick = (windowId) => {
+    const handleIconClick = (windowId: WindowId) => {
         setWindows(prev => ({
             ...prev,
             [windowId]: { ...prev[windowId], isOpen: true, isMinimized: false }
@@ -60,17 +62,17 @@ export default function HomePage() {
         playSound(audioFiles[0]);
     };
 
-    const handleCloseWindow = (windowId) => {
+    const handleCloseWindow = (windowId: WindowId) => {
         setWindows(prev => ({ ...prev, [windowId]: { ...prev[windowId], isOpen: false } }));
         playSound(audioFiles[1]);
     };
 
-    const handleMinimizeWindow = (windowId) => {
+    const handleMinimizeWindow = (windowId: WindowId) => {
         setWindows(prev => ({ ...prev, [windowId]: { ...prev[windowId], isMinimized: true } }));
         playSound(audioFiles[1]);
     };
     
-    const handleTaskbarClick = (windowId) => {
+    const handleTaskbarClick = (windowId: WindowId) => {
         setWindows(prev => ({
             ...prev,
             [windowId]: { ...prev[windowId], isMinimized: false }
@@ -98,10 +100,10 @@ export default function HomePage() {
                 {/* Windows */}
                 {Object.entries(windows).map(([id, win]) => (
                     win.isOpen && !win.isMinimized && (
-                        <Window key={id} id={id} {...win}
+                        <Window key={id} id={id as WindowId} {...win}
                             onClose={handleCloseWindow}
                             onMinimize={handleMinimizeWindow}
-                            onMouseDown={() => bringToFront(id)}
+                            onMouseDown={() => bringToFront(id as WindowId)}
                         />
                     )
                 ))}
@@ -114,7 +116,7 @@ export default function HomePage() {
                 <div className={styles.taskbarPrograms}>
                     {Object.entries(windows).map(([id, win]) => (
                         win.isOpen && win.isMinimized && (
-                            <div key={id} className={styles.taskbarTab} onClick={() => handleTaskbarClick(id)}>
+                            <div key={id} className={styles.taskbarTab} onClick={() => handleTaskbarClick(id as WindowId)}>
                                 {win.title}
                             </div>
                         )
@@ -127,7 +129,7 @@ export default function HomePage() {
     );
 }
 
-const DesktopIcon = ({ icon, name, onClick, href, position }) => {
+const DesktopIcon = ({ icon, name, onClick, href, position }: { icon: string, name: string, onClick?: () => void, href?: string, position: { top: number, left: number } }) => {
     const content = (
         <>
             <Image src={`/assets/${icon}`} alt={name} width={48} height={48} />
@@ -140,7 +142,7 @@ const DesktopIcon = ({ icon, name, onClick, href, position }) => {
     return <div className={styles.desktopIcon} style={position} onClick={onClick}>{content}</div>;
 };
 
-const Window = ({ id, title, onClose, onMinimize, onMouseDown }) => {
+const Window = ({ id, title, onClose, onMinimize, onMouseDown }: { id: WindowId, title: string, onClose: (id: WindowId) => void, onMinimize: (id: WindowId) => void, onMouseDown: () => void }) => {
     const content = {
         bio: <>
             <p><strong>DIESEL JENNY</strong></p>
