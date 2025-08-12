@@ -15,9 +15,9 @@ const audioFiles = [
 ];
 
 const initialWindows = {
-    bio: { title: 'README.TXT', isOpen: true, isMinimized: false, zIndex: 2, position: { x: 50, y: 50 } },
-    music: { title: 'MUSIC.EXE', isOpen: true, isMinimized: false, zIndex: 1, position: { x: 250, y: 100 } },
-    video: { title: 'VIDEO.AVI', isOpen: false, isMinimized: false, zIndex: 1, position: { x: 150, y: 150 } },
+    bio: { title: 'README.TXT', isOpen: true, isMinimized: false, zIndex: 2 },
+    music: { title: 'MUSIC.EXE', isOpen: true, isMinimized: false, zIndex: 1 },
+    video: { title: 'VIDEO.AVI', isOpen: false, isMinimized: false, zIndex: 1 },
 };
 
 type WindowId = keyof typeof initialWindows;
@@ -28,6 +28,12 @@ export default function HomePage() {
     const [phrase, setPhrase] = useState(phrases[0]);
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [highestZ, setHighestZ] = useState(2);
+
+    // Create refs for each draggable window
+    const bioRef = useRef<HTMLDivElement>(null);
+    const musicRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLDivElement>(null);
+    const windowRefs = { bio: bioRef, music: musicRef, video: videoRef };
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -100,7 +106,7 @@ export default function HomePage() {
                 {/* Windows */}
                 {Object.entries(windows).map(([id, win]) => (
                     win.isOpen && !win.isMinimized && (
-                        <Window key={id} id={id as WindowId} {...win}
+                        <Window key={id} id={id as WindowId} nodeRef={windowRefs[id as WindowId]} {...win}
                             onClose={handleCloseWindow}
                             onMinimize={handleMinimizeWindow}
                             onMouseDown={() => bringToFront(id as WindowId)}
@@ -142,7 +148,7 @@ const DesktopIcon = ({ icon, name, onClick, href, position }: { icon: string, na
     return <div className={styles.desktopIcon} style={position} onClick={onClick}>{content}</div>;
 };
 
-const Window = ({ id, title, onClose, onMinimize, onMouseDown }: { id: WindowId, title: string, onClose: (id: WindowId) => void, onMinimize: (id: WindowId) => void, onMouseDown: () => void }) => {
+const Window = ({ id, title, onClose, onMinimize, onMouseDown, nodeRef }: { id: WindowId, title: string, onClose: (id: WindowId) => void, onMinimize: (id: WindowId) => void, onMouseDown: () => void, nodeRef: React.RefObject<HTMLDivElement | null> }) => {
     const content = {
         bio: <>
             <p><strong>DIESEL JENNY</strong></p>
@@ -153,8 +159,8 @@ const Window = ({ id, title, onClose, onMinimize, onMouseDown }: { id: WindowId,
     };
 
     return (
-        <Draggable handle={`.${styles.titleBar}`} onMouseDown={onMouseDown}>
-            <div className={styles.window} style={{ zIndex: 10 }}>
+        <Draggable nodeRef={nodeRef} handle={`.${styles.titleBar}`} onMouseDown={onMouseDown}>
+            <div ref={nodeRef} className={styles.window} style={{ zIndex: 10 }}>
                 <div className={styles.titleBar}>
                     <Image src="/assets/dj-text-white.png" alt="" width={16} height={16} className={styles.titleIcon} />
                     <span className={styles.title}>{title}</span>

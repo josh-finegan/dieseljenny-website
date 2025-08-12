@@ -1,7 +1,12 @@
 /* CSS from desktop-style.css, adapted for CSS Modules */
+@font-face {
+    font-family: 'W95FA';
+    src: url('/assets/Microsoft Aptos Fonts/Aptos-Mono.ttf') format('truetype');
+}
+
 .desktopPage {
     background-color: #008080;
-    font-family: 'W95FA', 'monospace';
+    font-family: 'W95FA', 'monospace'; /* Fallback to monospace */
     font-size: 16px;
     margin: 0;
     overflow: hidden;
