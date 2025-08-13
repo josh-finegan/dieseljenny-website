@@ -1,0 +1,93 @@
+@font-face {
+    font-family: 'Aptos';
+    src: url('fonts/Aptos.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Typewriter';
+    src: url('fonts/Aptos.ttf') format('truetype'); /* Using Aptos as a stand-in */
+}
+
+body {
+    margin: 0;
+    background-color: #3d352a;
+}
+
+#desk {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: url(https://www.transparenttextures.com/patterns/wood-pattern.png), #6b5b4b;
+    overflow: hidden;
+    font-family: 'Typewriter', monospace;
+}
+
+.desk-item {
+    position: absolute;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+.desk-item:hover {
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+#logo-mat { top: 5%; left: 5%; background: #111; padding: 1rem; }
+#logo-mat img { width: 250px; }
+
+#bio-paper {
+    top: 15%; left: 30%;
+    background: #f4f1de;
+    padding: 2rem;
+    width: 300px;
+    transform: rotate(-2deg);
+}
+#bio-paper h3 { margin-top: 0; }
+
+#cassette-player {
+    bottom: 10%; right: 5%;
+    background: #c0c0c0;
+    padding: 1rem;
+    border: 2px solid #888;
+    width: 380px;
+}
+.cassette-label { background: #fff; color: #000; padding: 5px; margin-bottom: 1rem; text-align: center; }
+#cassette-player .embed-container { height: 120px; } /* Simplified embed */
+
+#crt-monitor {
+    top: 10%; right: 10%;
+    background: #555;
+    padding: 50px 20px 20px 20px;
+    border-radius: 10px;
+    transform: rotate(3deg);
+}
+.crt-screen { width: 480px; height: 360px; background: #000; }
+.crt-screen iframe { width: 100%; height: 100%; }
+
+.sticky-note {
+    background: #ffc;
+    padding: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+#sticky1 { top: 50%; left: 10%; transform: rotate(5deg); }
+#sticky2 { top: 65%; left: 15%; transform: rotate(-4deg); }
+
+#socials-polaroid {
+    bottom: 5%; left: 5%;
+    background: #fff;
+    padding: 1rem 1rem 4rem 1rem;
+    transform: rotate(8deg);
+}
+#socials-polaroid img { width: 200px; border: 1px solid #eee; }
+.polaroid-links { position: absolute; bottom: 1rem; left: 1rem; right: 1rem; text-align: center; display: flex; justify-content: space-around; }
+.polaroid-links a { color: #000; text-decoration: none; }
+
+#coffee-mug {
+    bottom: 20%; right: 35%;
+    width: 120px; height: 120px;
+    background: #333;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+}
+#coffee-mug img { width: 80%; filter: invert(1); }

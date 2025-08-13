@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'Aptos';
+    src: url('fonts/Aptos.ttf') format('truetype');
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Aptos', sans-serif;
+    margin: 0;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+#machine-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.glitch-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mix-blend-mode: screen;
+    opacity: 0.5;
+}
+.glitch-layer img {
+    width: 80%;
+    max-width: 800px;
+}
+
+#logo-layer { animation: glitch1 8s infinite; }
+#face-layer { animation: glitch2 5s infinite; }
+#text-layer { animation: glitch3 12s infinite; }
+
+@keyframes glitch1 {
+    0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+    10% { transform: translate(-5px, -5px); }
+    20% { transform: translate(5px, 5px); clip-path: inset(90% 0 0 0); }
+    /* ... more steps ... */
+    80% { transform: translate(0,0); opacity: 0.2; }
+}
+@keyframes glitch2 { /* Similar but different timing */ }
+@keyframes glitch3 { /* Similar but different timing */ }
+
+
+#content-window {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; max-width: 800px;
+    height: 80%; max-height: 600px;
+    background: rgba(255,255,255,0.9);
+    color: #000;
+    border: 1px solid #fff;
+    z-index: 100;
+    padding: 2rem;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.hidden { display: none; }
+#close-content {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+#phrase-display {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2rem;
+    text-transform: uppercase;
+    z-index: 50;
+    text-shadow: 0 0 10px #f0f;
+}
+
+#instruction {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+#instruction.hidden { opacity: 0; }
