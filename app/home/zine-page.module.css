@@ -1,13 +1,8 @@
-/* style.css - Concept A: Digital Zine */
-
-:root {
+.zineBody {
     --background: #000000;
     --foreground: #FFFFFF;
     --accent: #00FF41;
     --border: #333333;
-}
-
-body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: 'Roboto Mono', monospace;
@@ -17,14 +12,14 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-body.theme-light {
+.themeLight {
     --background: #FFFFFF;
     --foreground: #000000;
     --accent: #0687f5;
     --border: #cccccc;
 }
 
-.grid-container {
+.gridContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: auto;
@@ -33,7 +28,7 @@ body.theme-light {
     margin: 0 auto;
 }
 
-.grid-item {
+.gridItem {
     border: 2px solid var(--border);
     padding: 1.5rem;
 }
@@ -46,14 +41,15 @@ body.theme-light {
     border-bottom: 4px solid var(--foreground);
 }
 
-.logo h1 {
-    margin: 0;
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3rem;
+.headerLogoImg {
+    filter: invert(1);
 }
 
-#theme-toggle {
+.themeLight .headerLogoImg {
+    filter: none;
+}
+
+#themeToggle {
     font-family: 'Roboto Mono', monospace;
     background: transparent;
     color: var(--foreground);
@@ -64,7 +60,7 @@ body.theme-light {
     transition: all 0.3s ease;
 }
 
-#theme-toggle:hover {
+#themeToggle:hover {
     background: var(--foreground);
     color: var(--background);
     border-color: var(--foreground);
@@ -82,21 +78,20 @@ body.theme-light {
     margin-bottom: 1rem;
 }
 
-.embed-container {
+.embedContainer {
     position: relative;
     width: 100%;
-    padding-top: 100%; /* For square aspect ratio, adjust as needed */
 }
 
-.youtube .embed-container {
+.youtube .embedContainer {
     padding-top: 56.25%; /* 16:9 aspect ratio */
 }
 
-.bandcamp .embed-container {
+.bandcamp .embedContainer {
     padding-top: 134%; /* Approximate aspect ratio for the Bandcamp player */
 }
 
-.embed-container iframe {
+.embedContainer iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -125,11 +120,15 @@ body.theme-light {
 .social img {
     width: 32px;
     height: 32px;
-    filter: var(--background) > #888 ? invert(1) : none; /* Invert icons on light mode */
+    filter: invert(1);
+}
+
+.themeLight .social img {
+    filter: none;
 }
 
 @media (max-width: 768px) {
-    .grid-item {
+    .gridItem {
         grid-column: 1 / -1 !important;
     }
     .logo h1 {

@@ -1,178 +1,58 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Draggable from 'react-draggable';
-import styles from './desktop-page.module.css';
+import Link from 'next/link';
+import styles from './zine-page.module.css';
 
-const phrases = [
-    '‘NEVER DONE THIS TO ME BEFORE!’', "'LIKE A RAT UP A DRAINPIPE!'",
-    "'DAMN DIESEL!'", "'SANJAY'S SELECTIONS - THE OFFICIAL SPONSOR OF DIESEL JENNY'"
-];
-const audioFiles = [
-    '/assets/AudioStings/Jamaican Horn Siren.mp3', '/assets/AudioStings/Jeeeers.mp3',
-    '/assets/AudioStings/Oi who the fak.mp3', '/assets/AudioStings/Bro is that roti chanai.mp3'
-];
+export default function ZinePage() {
+    const [isLightTheme, setIsLightTheme] = useState(false);
 
-const initialWindows = {
-    bio: { title: 'README.TXT', isOpen: true, isMinimized: false, zIndex: 2 },
-    music: { title: 'MUSIC.EXE', isOpen: true, isMinimized: false, zIndex: 1 },
-    video: { title: 'VIDEO.AVI', isOpen: false, isMinimized: false, zIndex: 1 },
-};
-
-type WindowId = keyof typeof initialWindows;
-
-export default function HomePage() {
-    const [windows, setWindows] = useState(initialWindows);
-    const [time, setTime] = useState('');
-    const [phrase, setPhrase] = useState(phrases[0]);
-    const audioRef = useRef<HTMLAudioElement | null>(null);
-    const [highestZ, setHighestZ] = useState(2);
-
-    // Create refs for each draggable window
-    const bioRef = useRef<HTMLDivElement>(null);
-    const musicRef = useRef<HTMLDivElement>(null);
-    const videoRef = useRef<HTMLDivElement>(null);
-    const windowRefs = { bio: bioRef, music: musicRef, video: videoRef };
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-        }, 1000);
-        return () => clearInterval(timer);
-    }, []);
-
-    const playSound = (src: string) => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-        }
-        audioRef.current = new Audio(src);
-        audioRef.current.play();
-    };
-
-    const bringToFront = (windowId: WindowId) => {
-        const newZ = highestZ + 1;
-        setHighestZ(newZ);
-        setWindows(prev => ({
-            ...prev,
-            [windowId]: { ...prev[windowId], zIndex: newZ }
-        }));
-    };
-
-    const handleIconClick = (windowId: WindowId) => {
-        setWindows(prev => ({
-            ...prev,
-            [windowId]: { ...prev[windowId], isOpen: true, isMinimized: false }
-        }));
-        bringToFront(windowId);
-        playSound(audioFiles[0]);
-    };
-
-    const handleCloseWindow = (windowId: WindowId) => {
-        setWindows(prev => ({ ...prev, [windowId]: { ...prev[windowId], isOpen: false } }));
-        playSound(audioFiles[1]);
-    };
-
-    const handleMinimizeWindow = (windowId: WindowId) => {
-        setWindows(prev => ({ ...prev, [windowId]: { ...prev[windowId], isMinimized: true } }));
-        playSound(audioFiles[1]);
-    };
-    
-    const handleTaskbarClick = (windowId: WindowId) => {
-        setWindows(prev => ({
-            ...prev,
-            [windowId]: { ...prev[windowId], isMinimized: false }
-        }));
-        bringToFront(windowId);
-    }
-
-    const handleStartClick = () => {
-        const randomIndex = Math.floor(Math.random() * phrases.length);
-        setPhrase(phrases[randomIndex]);
-        playSound(audioFiles[2]);
+    const toggleTheme = () => {
+        setIsLightTheme(!isLightTheme);
     };
 
     return (
-        <div className={styles.desktopPage}>
-            <div className={styles.desktop}>
-                {/* Icons */}
-                <DesktopIcon icon="icon-readme.svg" name="README.TXT" onClick={() => handleIconClick('bio')} position={{top: 20, left: 20}} />
-                <DesktopIcon icon="icon-music.svg" name="MUSIC.EXE" onClick={() => handleIconClick('music')} position={{top: 120, left: 25}} />
-                <DesktopIcon icon="icon-video.svg" name="VIDEO.AVI" onClick={() => handleIconClick('video')} position={{top: 220, left: 20}} />
-                <DesktopIcon icon="icon-instagram.svg" name="INSTGRM.URL" href="https://www.instagram.com/diesel__jenny/" position={{top: 320, left: 22}} />
-                <DesktopIcon icon="icon-bandcamp.svg" name="BNDCMP.URL" href="https://dieseljenny.bandcamp.com/" position={{top: 20, left: 120}} />
-                <DesktopIcon icon="icon-facebook.svg" name="FCBOOK.URL" href="https://www.facebook.com/DieselJenny/" position={{top: 120, left: 125}} />
+        <div className={`${styles.zineBody} ${isLightTheme ? styles.themeLight : styles.themeDark}`}>
+            <div className={styles.gridContainer}>
+                <header className={`${styles.gridItem} ${styles.logo}`}>
+                    <Link href="/">
+                        <Image src="/assets/dj-text-white.png" alt="Diesel Jenny Logo" width={300} height={50} className={styles.headerLogoImg} />
+                    </Link>
+                    <button id={styles.themeToggle} onClick={toggleTheme}>Invert</button>
+                </header>
 
-                {/* Windows */}
-                {Object.entries(windows).map(([id, win]) => (
-                    win.isOpen && !win.isMinimized && (
-                        <Window key={id} id={id as WindowId} nodeRef={windowRefs[id as WindowId]} {...win}
-                            onClose={handleCloseWindow}
-                            onMinimize={handleMinimizeWindow}
-                            onMouseDown={() => bringToFront(id as WindowId)}
-                        />
-                    )
-                ))}
-            </div>
-            <div className={styles.taskbar}>
-                <div className={styles.startButton} onClick={handleStartClick}>
-                    <Image src="/assets/logo-black.png" alt="Start" width={20} height={20} />
-                    <span>Start</span>
-                </div>
-                <div className={styles.taskbarPrograms}>
-                    {Object.entries(windows).map(([id, win]) => (
-                        win.isOpen && win.isMinimized && (
-                            <div key={id} className={styles.taskbarTab} onClick={() => handleTaskbarClick(id as WindowId)}>
-                                {win.title}
-                            </div>
-                        )
-                    ))}
-                </div>
-                <div className={styles.phraseTicker}>{phrase}</div>
-                <div className={styles.time}>{time}</div>
+                <section className={`${styles.gridItem} ${styles.bio}`}>
+                    <h2>About</h2>
+                    <p>Diesel Jenny launches their debut release, a double A-side as part of their new white label series. The ferociously rungle two-tracker is the first trip out under a new moniker from veteran Pōneke-based producer Josh Finegan (fka ABG).</p>
+                </section>
+
+                <section className={`${styles.gridItem} ${styles.bandcamp}`}>
+                    <h2>Music</h2>
+                    <div className={styles.embedContainer}>
+                        <iframe style={{ border: 0, width: '100%', height: '100%' }} src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=ffffff/tracklist=false/transparent=true/" seamless><a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a></iframe>
+                    </div>
+                </section>
+
+                <section className={`${styles.gridItem} ${styles.youtube}`}>
+                    <h2>Video</h2>
+                    <div className={styles.embedContainer}>
+                        <iframe src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q&modestbranding=1&controls=0" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                </section>
+
+                <footer className={`${styles.gridItem} ${styles.social}`}>
+                    <a href="https://www.instagram.com/diesel__jenny/" target="_blank" rel="noopener noreferrer" title="Instagram">
+                        <Image src="/assets/icon-instagram.svg" alt="Instagram" width={32} height={32} />
+                    </a>
+                    <a href="https://dieseljenny.bandcamp.com/" target="_blank" rel="noopener noreferrer" title="Bandcamp">
+                        <Image src="/assets/icon-bandcamp.svg" alt="Bandcamp" width={32} height={32} />
+                    </a>
+                    <a href="https://www.facebook.com/DieselJenny/" target="_blank" rel="noopener noreferrer" title="Facebook">
+                        <Image src="/assets/icon-facebook.svg" alt="Facebook" width={32} height={32} />
+                    </a>
+                </footer>
             </div>
         </div>
     );
 }
-
-const DesktopIcon = ({ icon, name, onClick, href, position }: { icon: string, name: string, onClick?: () => void, href?: string, position: { top: number, left: number } }) => {
-    const content = (
-        <>
-            <Image src={`/assets/${icon}`} alt={name} width={48} height={48} />
-            <span>{name}</span>
-        </>
-    );
-    if (href) {
-        return <a href={href} target="_blank" rel="noopener noreferrer" className={styles.desktopIcon} style={position}>{content}</a>;
-    }
-    return <div className={styles.desktopIcon} style={position} onClick={onClick}>{content}</div>;
-};
-
-const Window = ({ id, title, onClose, onMinimize, onMouseDown, nodeRef }: { id: WindowId, title: string, onClose: (id: WindowId) => void, onMinimize: (id: WindowId) => void, onMouseDown: () => void, nodeRef: React.RefObject<HTMLDivElement | null> }) => {
-    const content = {
-        bio: <>
-            <p><strong>DIESEL JENNY</strong></p>
-            <p>Diesel Jenny launches their debut release, a double A-side as part of their new white label series. The ferociously rungle two-tracker is the first trip out under a new moniker from veteran Pōneke-based producer Josh Finegan (fka ABG).</p>
-        </>,
-        music: <iframe style={{ border: 0, width: '100%', height: '470px' }} src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless></iframe>,
-        video: <iframe width="560" height="315" src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
-    };
-
-    return (
-        <Draggable nodeRef={nodeRef} handle={`.${styles.titleBar}`} onMouseDown={onMouseDown}>
-            <div ref={nodeRef} className={styles.window} style={{ zIndex: 10 }}>
-                <div className={styles.titleBar}>
-                    <Image src="/assets/dj-text-white.png" alt="" width={16} height={16} className={styles.titleIcon} />
-                    <span className={styles.title}>{title}</span>
-                    <div className={styles.buttons}>
-                        <button className={styles.minimizeBtn} onClick={() => onMinimize(id)}>_</button>
-                        <button className={styles.closeBtn} onClick={() => onClose(id)}>X</button>
-                    </div>
-                </div>
-                <div className={`${styles.content} ${id === 'video' ? styles.videoContent : ''}`}>
-                    {content[id]}
-                </div>
-            </div>
-        </Draggable>
-    );
-};
