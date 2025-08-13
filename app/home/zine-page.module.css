@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'Aptos';
+    src: url('/assets/Microsoft Aptos Fonts/Aptos.ttf') format('truetype');
+}
+
 .zineBody {
     --background: #000000;
     --foreground: #FFFFFF;
@@ -5,7 +10,7 @@
     --border: #333333;
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'Aptos', sans-serif;
     margin: 0;
     padding: 1rem;
     box-sizing: border-box;
