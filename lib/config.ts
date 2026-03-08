@@ -12,8 +12,14 @@ export const phrases = [
 export const socialLinks = {
     instagram: "https://www.instagram.com/diesel__jenny/",
     bandcamp: "https://dieseljenny.bandcamp.com/",
-    facebook: "https://www.facebook.com/DieselJenny/"
+    facebook: "https://www.facebook.com/DieselJenny/",
+    youtube: "https://www.youtube.com/@DieselJenny",
+    tiktok: "https://www.tiktok.com/@dieseljenny"
 };
+
+export const contactEmail = "dieseljenny@proton.me";
+
+export const latestUpdates = "DJEN001 OUT NOW VIA BANDCAMP. REPRESS COMING SOON. NEXT WHITE LABEL SERIES IN THE WORKS.";
 
 export const embeds = {
     bandcamp: "https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=ffffff/tracklist=false/transparent=true/",
