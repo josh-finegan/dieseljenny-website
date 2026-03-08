@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept C: Kinetic Typography</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <h1 class="logo-text">DIESEL JENNY</h1>
+        </div>
+
+        <nav class="main-nav">
+            <a href="#" id="music-link">Music</a>
+            <a href="#" id="video-link">Video</a>
+        </nav>
+
+        <div class="social-orbit">
+            <!-- Icons will be injected by JS -->
+        </div>
+    </div>
+
+    <!-- Embed Modals -->
+    <div class="modal-container" id="music-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <iframe style="border: 0; width: 350px; height: 470px;" src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" seamless><a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a></iframe>
+        </div>
+    </div>
+    <div class="modal-container" id="video-modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
