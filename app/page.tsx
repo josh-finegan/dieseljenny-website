@@ -1,11 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Youtube, Facebook } from 'lucide-react';
 import Link from 'next/link';
 
 const COLORS = ['#FF4000', '#0057FF', '#FF00C1', '#22E4AC'];
+const PHRASES = [
+  '‘NEVER DONE THIS TO ME BEFORE!’',
+  '\'LIKE A RAT UP A DRAINPIPE!\'',
+  '\'DAMN DIESEL!\'',
+  '\'SANJAY\'S SELECTIONS - THE OFFICIAL SPONSOR OF DIESEL JENNY\''
+];
 
 const BandcampIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
   <svg 
@@ -35,8 +41,26 @@ const TikTokIcon = ({ size = 24, className = "" }: { size?: number, className?: 
 
 export default function LandingPage() {
   const [bgColor, setBgColor] = useState(COLORS[0]);
+  const [selectedPhrase, setSelectedPhrase] = useState('');
+  const audioRefs = useRef<Record<string, HTMLAudioElement>>({});
 
   useEffect(() => {
+    // Pick random phrase on mount
+    setSelectedPhrase(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
+
+    // Preload audio stings
+    const stings = {
+      diesel: '/assets/AudioStings/dieseljenny2.mp3',
+      rat: '/assets/AudioStings/ratupadrainpipe.mp3',
+      home: '/assets/AudioStings/supbroski.mp3',
+      instagram: '/assets/AudioStings/brothermango.mp3',
+      bandcamp: '/assets/AudioStings/horn.mp3'
+    };
+
+    Object.entries(stings).forEach(([key, src]) => {
+      audioRefs.current[key] = new Audio(src);
+    });
+
     const interval = setInterval(() => {
       setBgColor((prev) => {
         const currentIndex = COLORS.indexOf(prev);
@@ -44,6 +68,14 @@ export default function LandingPage() {
       });
     }, 5000);
     return () => clearInterval(interval);
+  }, []);
+
+  const playSting = useCallback((key: string) => {
+    const audio = audioRefs.current[key];
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(e => console.log('Audio error:', e));
+    }
   }, []);
 
   useEffect(() => {
@@ -57,6 +89,28 @@ export default function LandingPage() {
     { href: 'https://www.tiktok.com/@dieseljenny', icon: TikTokIcon },
     { href: 'https://www.facebook.com/DieselJenny/', icon: Facebook },
   ];
+
+  // Dynamic font size logic for phrase
+  // 'LIKE A RAT UP A DRAINPIPE!' is ~26 chars. We use text-[4.2vw] / text-[2.8vw] (sm)
+  // If phrase is longer, scale down.
+  const getPhraseStyle = (phrase: string) => {
+    const defaultChars = 26;
+    const charLen = phrase.length;
+    if (charLen <= defaultChars) return {};
+    
+    // Scale down proportionally to fit the same visual width
+    const scale = defaultChars / charLen;
+    return {
+      fontSize: `calc(${scale} * 4.2vw)`,
+      // On mobile it uses 4.2vw, on sm it uses 2.8vw. 
+      // This is a bit complex for inline but we'll use a responsive clamp-like approach
+      fontSize: `clamp(1rem, ${scale * 4.2}vw, ${scale * 2.8}vw)` // Actually responsive below
+    };
+  };
+
+  // Improved phrase styling approach using tailwind classes and a custom override
+  const phraseBaseSize = "text-[4.2vw] sm:text-[2.8vw]";
+  const isLongPhrase = selectedPhrase.length > 30;
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-[2000ms]">
@@ -95,7 +149,9 @@ export default function LandingPage() {
       {/* Main Content */}
       <div className="relative z-10 text-center flex flex-col items-center">
         <motion.h1 
-          className="font-brand text-[15vw] leading-none uppercase select-none"
+          onMouseEnter={() => playSting('diesel')}
+          whileHover={{ scale: 1.05 }}
+          className="font-brand text-[10.5vw] leading-none uppercase select-none cursor-default"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -105,17 +161,20 @@ export default function LandingPage() {
         </motion.h1>
 
         <motion.h2
-          className="font-bebas italic text-[6vw] sm:text-[4vw] mt-2 select-none"
+          onMouseEnter={() => playSting('rat')}
+          whileHover={{ scale: 1.05 }}
+          className={`font-bebas italic mt-2 select-none cursor-default whitespace-nowrap px-4 ${isLongPhrase ? 'text-[2.5vw] sm:text-[1.8vw]' : phraseBaseSize}`}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
           style={{ textShadow: '2px 2px 0px black' }}
         >
-          'Like a rat up a drainpipe!'
+          {selectedPhrase}
         </motion.h2>
 
-        <nav className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[5vw] sm:text-[3vw] uppercase font-bebas tracking-widest">
+        <nav className="mt-28 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[5vw] sm:text-[3vw] uppercase font-bebas tracking-widest">
           <a 
+            onMouseEnter={() => playSting('bandcamp')}
             href="https://dieseljenny.bandcamp.com/" 
             target="_blank" 
             rel="noopener noreferrer"
@@ -125,6 +184,7 @@ export default function LandingPage() {
           </a>
           
           <Link 
+            onMouseEnter={() => playSting('home')}
             href="/home"
             className="hover:scale-110 hover:text-black transition-all"
           >
@@ -132,6 +192,7 @@ export default function LandingPage() {
           </Link>
 
           <a 
+            onMouseEnter={() => playSting('instagram')}
             href="https://www.instagram.com/diesel__jenny/" 
             target="_blank" 
             rel="noopener noreferrer"
