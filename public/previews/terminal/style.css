@@ -1,0 +1,103 @@
+/* style.css - Concept 4: The Terminal */
+
+body {
+    background-color: #333;
+    color: #00FF41;
+    font-family: 'VT323', monospace;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.terminal-window {
+    width: 100%;
+    max-width: 800px;
+    height: 500px;
+    background-color: rgba(0, 0, 0, 0.85);
+    border: 1px solid #444;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.terminal-header {
+    background-color: #E0E0E0;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.buttons {
+    display: flex;
+    gap: 6px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.dot.red { background-color: #FF5F56; }
+.dot.yellow { background-color: #FFBD2E; }
+.dot.green { background-color: #27C93F; }
+
+.title {
+    color: #333;
+    font-family: sans-serif;
+    font-size: 12px;
+    text-align: center;
+    flex-grow: 1;
+    margin-right: 50px; /* to balance buttons */
+}
+
+.terminal-body {
+    padding: 1rem;
+    flex-grow: 1;
+    overflow-y: auto;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+#output p {
+    margin: 0 0 1rem 0;
+    white-space: pre-wrap;
+}
+
+#output a {
+    color: #00FF41;
+    text-decoration: underline;
+}
+
+#output a:hover {
+    background-color: #00FF41;
+    color: #000;
+}
+
+.prompt-line {
+    display: flex;
+    align-items: center;
+}
+
+.prompt-user {
+    color: #FFBD2E;
+}
+
+.prompt-symbol {
+    color: #27C93F;
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
