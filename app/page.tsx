@@ -42,6 +42,9 @@ const TikTokIcon = ({ size = 24, className = "" }: { size?: number, className?: 
 export default function LandingPage() {
   const [bgColor, setBgColor] = useState(COLORS[0]);
   const [selectedPhrase, setSelectedPhrase] = useState('');
+  const [titleAnimating, setTitleAnimating] = useState(false);
+  const [phraseAnimating, setPhraseAnimating] = useState(false);
+  
   const audioRefs = useRef<Record<string, HTMLAudioElement>>({});
   const currentlyPlaying = useRef<HTMLAudioElement | null>(null);
 
@@ -49,7 +52,7 @@ export default function LandingPage() {
     // Pick random phrase on mount
     setSelectedPhrase(PHRASES[Math.floor(Math.random() * PHRASES.length)]);
 
-    // Preload audio stings
+    // Preload audio stings with priority hints
     const stings = {
       diesel: '/assets/AudioStings/dieseljenny2.mp3',
       rat: '/assets/AudioStings/ratupadrainpipe.mp3',
@@ -59,7 +62,10 @@ export default function LandingPage() {
     };
 
     Object.entries(stings).forEach(([key, src]) => {
-      audioRefs.current[key] = new Audio(src);
+      const audio = new Audio();
+      audio.preload = 'auto'; // Force aggressive preloading
+      audio.src = src;
+      audioRefs.current[key] = audio;
     });
 
     const interval = setInterval(() => {
@@ -72,7 +78,6 @@ export default function LandingPage() {
   }, []);
 
   const playSting = useCallback((key: string) => {
-    // Choke logic: pause currently playing audio
     if (currentlyPlaying.current) {
       currentlyPlaying.current.pause();
       currentlyPlaying.current.currentTime = 0;
@@ -86,6 +91,28 @@ export default function LandingPage() {
     }
   }, []);
 
+  const cyclePhrase = () => {
+    const currentIndex = PHRASES.indexOf(selectedPhrase);
+    const nextIndex = (currentIndex + 1) % PHRASES.length;
+    setSelectedPhrase(PHRASES[nextIndex]);
+    playSting('rat');
+    // Trigger animation
+    setPhraseAnimating(true);
+    setTimeout(() => setPhraseAnimating(false), 200);
+  };
+
+  const triggerTitleAnim = () => {
+    setTitleAnimating(true);
+    playSting('diesel');
+    setTimeout(() => setTitleAnimating(false), 200);
+  };
+
+  const triggerPhraseAnim = () => {
+    setPhraseAnimating(true);
+    playSting('rat');
+    setTimeout(() => setPhraseAnimating(false), 200);
+  };
+
   useEffect(() => {
     document.documentElement.style.setProperty('--bg-color', bgColor);
   }, [bgColor]);
@@ -98,7 +125,6 @@ export default function LandingPage() {
     { href: 'https://www.facebook.com/DieselJenny/', icon: Facebook },
   ];
 
-  // Phrase sizing logic
   const phraseBaseSize = "text-[5.5vw] sm:text-[3.5vw]";
   const isLongPhrase = selectedPhrase.length > 30;
 
@@ -139,22 +165,21 @@ export default function LandingPage() {
       {/* Main Content */}
       <div className="relative z-10 text-center flex flex-col items-center">
         <motion.h1 
-          onMouseEnter={() => playSting('diesel')}
-          className="font-brand text-[13vw] leading-none uppercase select-none cursor-default hover:scale-105 transition-transform duration-150 ease-out"
+          onMouseEnter={triggerTitleAnim}
+          animate={{ scale: titleAnimating ? 1.05 : 1 }}
+          className="font-brand text-[13vw] leading-none uppercase select-none cursor-default transition-transform duration-200"
           initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
           style={{ textShadow: '4px 4px 0px black' }}
         >
           DIESEL JENNY
         </motion.h1>
 
         <motion.h2
-          onMouseEnter={() => playSting('rat')}
-          className={`font-bebas italic mt-2 select-none cursor-default whitespace-nowrap px-4 hover:scale-105 transition-transform duration-150 ease-out ${isLongPhrase ? 'text-[3vw] sm:text-[2.2vw]' : phraseBaseSize}`}
+          onClick={cyclePhrase}
+          onMouseEnter={triggerPhraseAnim}
+          animate={{ scale: phraseAnimating ? 1.05 : 1 }}
+          className={`font-bebas italic mt-2 select-none cursor-pointer whitespace-nowrap px-4 transition-transform duration-200 ${isLongPhrase ? 'text-[3vw] sm:text-[2.2vw]' : phraseBaseSize}`}
           initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
           style={{ textShadow: '2px 2px 0px black' }}
         >
           {selectedPhrase}
