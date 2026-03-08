@@ -2,14 +2,39 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Facebook, Music } from 'lucide-react';
+import { Instagram, Youtube } from 'lucide-react';
 import Link from 'next/link';
 
 const COLORS = ['#FF4000', '#0057FF', '#FF00C1', '#22E4AC'];
 
+const BandcampIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/>
+  </svg>
+);
+
+const TikTokIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    className={className}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a6.38 6.38 0 0 1-1.87-1.48v7.24c0 1.27-.13 2.56-.63 3.73-.69 1.67-1.95 3.09-3.59 3.86-1.58.74-3.39.98-5.11.74-1.72-.24-3.34-.99-4.63-2.17C1.19 19.3.43 17.58.19 15.79c-.21-1.61.05-3.26.75-4.71.69-1.44 1.83-2.67 3.23-3.43 1.4-.76 3.03-1.07 4.62-.93v4.14c-1.11-.14-2.29.13-3.2.78-1.05.74-1.58 2.02-1.42 3.29.13 1.05.7 2.05 1.59 2.61.94.59 2.11.72 3.16.37 1.14-.37 2.03-1.29 2.4-2.4.15-.45.21-.92.21-1.39V.02z"/>
+  </svg>
+);
+
 export default function LandingPage() {
   const [bgColor, setBgColor] = useState(COLORS[0]);
-  const [activeModal, setActiveModal] = useState<'bandcamp' | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -26,18 +51,19 @@ export default function LandingPage() {
   }, [bgColor]);
 
   const socialLinks = [
+    { href: 'https://dieseljenny.bandcamp.com/', icon: BandcampIcon },
     { href: 'https://www.instagram.com/diesel__jenny/', icon: Instagram },
-    { href: 'https://dieseljenny.bandcamp.com/', icon: Music },
-    { href: 'https://www.facebook.com/DieselJenny/', icon: Facebook },
+    { href: 'https://www.youtube.com/@DieselJenny', icon: Youtube },
+    { href: 'https://www.tiktok.com/@dieseljenny', icon: TikTokIcon },
   ];
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-[2000ms]">
       {/* Social Orbit */}
       <motion.div 
-        className="absolute w-[85vw] h-[85vw] max-w-[700px] max-h-[700px] pointer-events-none"
+        className="absolute w-[85vw] h-[85vw] max-w-[750px] max-h-[750px] pointer-events-none"
         animate={{ rotate: 360 }}
-        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
       >
         {socialLinks.map((link, index) => {
           const angle = (index / socialLinks.length) * 2 * Math.PI;
@@ -46,11 +72,11 @@ export default function LandingPage() {
               key={link.href}
               className="absolute pointer-events-auto"
               style={{
-                left: `calc(50% + ${Math.cos(angle) * 50}% - 20px)`,
-                top: `calc(50% + ${Math.sin(angle) * 50}% - 20px)`,
+                left: `calc(50% + ${Math.cos(angle) * 50}% - 22px)`,
+                top: `calc(50% + ${Math.sin(angle) * 50}% - 22px)`,
               }}
               animate={{ rotate: -360 }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
             >
               <a 
                 href={link.href} 
@@ -58,7 +84,7 @@ export default function LandingPage() {
                 rel="noopener noreferrer"
                 className="text-white hover:text-black transition-colors"
               >
-                <link.icon size={40} strokeWidth={1.5} />
+                <link.icon size={44} className="transition-all" />
               </a>
             </motion.div>
           );
@@ -87,13 +113,15 @@ export default function LandingPage() {
           'Like a rat up a drainpipe!'
         </motion.h2>
 
-        <nav className="mt-16 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[5vw] sm:text-[3vw] uppercase font-bebas tracking-widest">
-          <button 
-            onClick={() => setActiveModal('bandcamp')}
+        <nav className="mt-20 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[5vw] sm:text-[3vw] uppercase font-bebas tracking-widest">
+          <a 
+            href="https://dieseljenny.bandcamp.com/" 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="hover:scale-110 hover:text-black transition-all"
           >
             Bandcamp
-          </button>
+          </a>
           
           <Link 
             href="/home"
@@ -112,40 +140,6 @@ export default function LandingPage() {
           </a>
         </nav>
       </div>
-
-      {/* Modals */}
-      <AnimatePresence>
-        {activeModal && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveModal(null)}
-          >
-            <motion.div 
-              className="relative bg-black p-4 rounded-lg shadow-2xl"
-              initial={{ scale: 0.8, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.8, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button 
-                className="absolute -top-10 -right-2 text-white text-3xl hover:text-red-500 transition-colors"
-                onClick={() => setActiveModal(null)}
-              >
-                &times;
-              </button>
-              
-              <iframe 
-                className="w-[300px] h-[450px] sm:w-[350px] sm:h-[470px] border-0"
-                src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=00ffff/tracklist=false/transparent=true/" 
-                seamless
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }
