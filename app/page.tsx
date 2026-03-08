@@ -166,7 +166,7 @@ export default function LandingPage() {
       <div className="relative z-10 text-center flex flex-col items-center">
         <motion.h1 
           onMouseEnter={triggerTitleAnim}
-          animate={{ scale: titleAnimating ? 1.05 : 1 }}
+          animate={{ scale: titleAnimating ? 1.05 : 1, opacity: 1 }}
           className="font-brand text-[13vw] leading-none uppercase select-none cursor-default transition-transform duration-200"
           initial={{ scale: 0.8, opacity: 0 }}
           style={{ textShadow: '4px 4px 0px black' }}
@@ -177,7 +177,7 @@ export default function LandingPage() {
         <motion.h2
           onClick={cyclePhrase}
           onMouseEnter={triggerPhraseAnim}
-          animate={{ scale: phraseAnimating ? 1.05 : 1 }}
+          animate={{ scale: phraseAnimating ? 1.05 : 1, opacity: 1 }}
           className={`font-bebas italic mt-2 select-none cursor-pointer whitespace-nowrap px-4 transition-transform duration-200 ${isLongPhrase ? 'text-[3vw] sm:text-[2.2vw]' : phraseBaseSize}`}
           initial={{ opacity: 0, y: 10 }}
           style={{ textShadow: '2px 2px 0px black' }}
