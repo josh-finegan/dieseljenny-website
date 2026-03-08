@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Facebook, Music } from 'lucide-react';
+import Link from 'next/link';
 
 const COLORS = ['#FF4000', '#0057FF', '#FF00C1', '#22E4AC'];
 
 export default function LandingPage() {
   const [bgColor, setBgColor] = useState(COLORS[0]);
-  const [activeModal, setActiveModal] = useState<'music' | 'video' | null>(null);
+  const [activeModal, setActiveModal] = useState<'bandcamp' | null>(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,13 +33,11 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-[2000ms]">
-      {/* Background Kinetic Typography Layer (Optional - but for now just the bg color) */}
-      
       {/* Social Orbit */}
       <motion.div 
-        className="absolute w-[80vw] h-[80vw] max-w-[600px] max-h-[600px] pointer-events-none"
+        className="absolute w-[85vw] h-[85vw] max-w-[700px] max-h-[700px] pointer-events-none"
         animate={{ rotate: 360 }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
       >
         {socialLinks.map((link, index) => {
           const angle = (index / socialLinks.length) * 2 * Math.PI;
@@ -51,7 +50,7 @@ export default function LandingPage() {
                 top: `calc(50% + ${Math.sin(angle) * 50}% - 20px)`,
               }}
               animate={{ rotate: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             >
               <a 
                 href={link.href} 
@@ -67,7 +66,7 @@ export default function LandingPage() {
       </motion.div>
 
       {/* Main Content */}
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center flex flex-col items-center">
         <motion.h1 
           className="font-brand text-[15vw] leading-none uppercase select-none"
           initial={{ scale: 0.8, opacity: 0 }}
@@ -78,19 +77,39 @@ export default function LandingPage() {
           DIESEL JENNY
         </motion.h1>
 
-        <nav className="mt-8 flex justify-center gap-12 text-[6vw] sm:text-[4vw] uppercase">
+        <motion.h2
+          className="font-bebas italic text-[6vw] sm:text-[4vw] mt-2 select-none"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          style={{ textShadow: '2px 2px 0px black' }}
+        >
+          'Like a rat up a drainpipe!'
+        </motion.h2>
+
+        <nav className="mt-16 flex flex-wrap justify-center gap-x-12 gap-y-6 text-[5vw] sm:text-[3vw] uppercase font-bebas tracking-widest">
           <button 
-            onClick={() => setActiveModal('music')}
+            onClick={() => setActiveModal('bandcamp')}
             className="hover:scale-110 hover:text-black transition-all"
           >
-            Music
+            Bandcamp
           </button>
-          <button 
-            onClick={() => setActiveModal('video')}
+          
+          <Link 
+            href="/home"
             className="hover:scale-110 hover:text-black transition-all"
           >
-            Video
-          </button>
+            Home
+          </Link>
+
+          <a 
+            href="https://www.instagram.com/diesel__jenny/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:scale-110 hover:text-black transition-all"
+          >
+            Instagram
+          </a>
         </nav>
       </div>
 
@@ -118,21 +137,11 @@ export default function LandingPage() {
                 &times;
               </button>
               
-              {activeModal === 'music' ? (
-                <iframe 
-                  className="w-[300px] h-[450px] sm:w-[350px] sm:h-[470px] border-0"
-                  src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=00ffff/tracklist=false/transparent=true/" 
-                  seamless
-                />
-              ) : (
-                <iframe 
-                  className="w-[85vw] aspect-video max-w-[800px] border-0"
-                  src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" 
-                  title="YouTube video player" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                  allowFullScreen
-                />
-              )}
+              <iframe 
+                className="w-[300px] h-[450px] sm:w-[350px] sm:h-[470px] border-0"
+                src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=00ffff/tracklist=false/transparent=true/" 
+                seamless
+              />
             </motion.div>
           </motion.div>
         )}
