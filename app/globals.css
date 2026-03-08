@@ -1,1 +1,26 @@
 @import "tailwindcss";
+
+@theme {
+  --font-brand: "Anton", sans-serif;
+  --font-bebas: "Bebas Neue", sans-serif;
+}
+
+:root {
+  --bg-color: #FF4000;
+  --text-color: #FFFFFF;
+  --accent-color: #000000;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  overflow: hidden;
+  transition: background-color 2s ease-in-out;
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
