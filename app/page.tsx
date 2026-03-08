@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Instagram, Youtube } from 'lucide-react';
+import { Instagram, Youtube, Facebook } from 'lucide-react';
 import Link from 'next/link';
 
 const COLORS = ['#FF4000', '#0057FF', '#FF00C1', '#22E4AC'];
@@ -55,6 +55,7 @@ export default function LandingPage() {
     { href: 'https://www.instagram.com/diesel__jenny/', icon: Instagram },
     { href: 'https://www.youtube.com/@DieselJenny', icon: Youtube },
     { href: 'https://www.tiktok.com/@dieseljenny', icon: TikTokIcon },
+    { href: 'https://www.facebook.com/DieselJenny/', icon: Facebook },
   ];
 
   return (
@@ -63,7 +64,7 @@ export default function LandingPage() {
       <motion.div 
         className="absolute w-[85vw] h-[85vw] max-w-[750px] max-h-[750px] pointer-events-none"
         animate={{ rotate: 360 }}
-        transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+        transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
       >
         {socialLinks.map((link, index) => {
           const angle = (index / socialLinks.length) * 2 * Math.PI;
@@ -76,7 +77,7 @@ export default function LandingPage() {
                 top: `calc(50% + ${Math.sin(angle) * 50}% - 22px)`,
               }}
               animate={{ rotate: -360 }}
-              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
             >
               <a 
                 href={link.href} 
