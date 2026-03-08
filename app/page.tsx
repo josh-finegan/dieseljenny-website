@@ -101,10 +101,7 @@ export default function LandingPage() {
     // Scale down proportionally to fit the same visual width
     const scale = defaultChars / charLen;
     return {
-      fontSize: `calc(${scale} * 4.2vw)`,
-      // On mobile it uses 4.2vw, on sm it uses 2.8vw. 
-      // This is a bit complex for inline but we'll use a responsive clamp-like approach
-      fontSize: `clamp(1rem, ${scale * 4.2}vw, ${scale * 2.8}vw)` // Actually responsive below
+      fontSize: `clamp(1rem, ${scale * 4.2}vw, ${scale * 2.8}vw)`
     };
   };
 
