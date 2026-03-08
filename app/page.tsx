@@ -43,6 +43,7 @@ export default function LandingPage() {
   const [bgColor, setBgColor] = useState(COLORS[0]);
   const [selectedPhrase, setSelectedPhrase] = useState('');
   const audioRefs = useRef<Record<string, HTMLAudioElement>>({});
+  const currentlyPlaying = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Pick random phrase on mount
@@ -71,10 +72,17 @@ export default function LandingPage() {
   }, []);
 
   const playSting = useCallback((key: string) => {
+    // Choke logic: pause currently playing audio
+    if (currentlyPlaying.current) {
+      currentlyPlaying.current.pause();
+      currentlyPlaying.current.currentTime = 0;
+    }
+
     const audio = audioRefs.current[key];
     if (audio) {
       audio.currentTime = 0;
       audio.play().catch(e => console.log('Audio error:', e));
+      currentlyPlaying.current = audio;
     }
   }, []);
 
@@ -90,23 +98,8 @@ export default function LandingPage() {
     { href: 'https://www.facebook.com/DieselJenny/', icon: Facebook },
   ];
 
-  // Dynamic font size logic for phrase
-  // 'LIKE A RAT UP A DRAINPIPE!' is ~26 chars. We use text-[4.2vw] / text-[2.8vw] (sm)
-  // If phrase is longer, scale down.
-  const getPhraseStyle = (phrase: string) => {
-    const defaultChars = 26;
-    const charLen = phrase.length;
-    if (charLen <= defaultChars) return {};
-    
-    // Scale down proportionally to fit the same visual width
-    const scale = defaultChars / charLen;
-    return {
-      fontSize: `clamp(1rem, ${scale * 4.2}vw, ${scale * 2.8}vw)`
-    };
-  };
-
-  // Improved phrase styling approach using tailwind classes and a custom override
-  const phraseBaseSize = "text-[4.2vw] sm:text-[2.8vw]";
+  // Phrase sizing logic
+  const phraseBaseSize = "text-[5.5vw] sm:text-[3.5vw]";
   const isLongPhrase = selectedPhrase.length > 30;
 
   return (
@@ -147,8 +140,7 @@ export default function LandingPage() {
       <div className="relative z-10 text-center flex flex-col items-center">
         <motion.h1 
           onMouseEnter={() => playSting('diesel')}
-          whileHover={{ scale: 1.05 }}
-          className="font-brand text-[10.5vw] leading-none uppercase select-none cursor-default"
+          className="font-brand text-[13vw] leading-none uppercase select-none cursor-default hover:scale-105 transition-transform duration-150 ease-out"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -159,8 +151,7 @@ export default function LandingPage() {
 
         <motion.h2
           onMouseEnter={() => playSting('rat')}
-          whileHover={{ scale: 1.05 }}
-          className={`font-bebas italic mt-2 select-none cursor-default whitespace-nowrap px-4 ${isLongPhrase ? 'text-[2.5vw] sm:text-[1.8vw]' : phraseBaseSize}`}
+          className={`font-bebas italic mt-2 select-none cursor-default whitespace-nowrap px-4 hover:scale-105 transition-transform duration-150 ease-out ${isLongPhrase ? 'text-[3vw] sm:text-[2.2vw]' : phraseBaseSize}`}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
