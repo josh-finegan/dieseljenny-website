@@ -86,10 +86,41 @@ export default function HomePage() {
           <p className="font-bebas text-2xl md:text-3xl leading-relaxed text-white tracking-wide">{bio}</p>
         </section>
 
+        {/* Bandcamp Embed Box */}
+        <section className="bg-black/20 p-8 md:p-12 border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center gap-6">
+          <h2 className="font-brand text-3xl uppercase text-white self-start border-b-2 border-white/20 w-full pb-2">Music</h2>
+          <div className="w-full flex justify-center bg-white/5 p-4 border-2 border-black">
+            <iframe 
+              style={{ border: 0, width: '350px', height: '470px' }} 
+              src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" 
+              seamless
+            >
+              <a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a>
+            </iframe>
+          </div>
+        </section>
+
         {/* Latest Updates Box (Concept 6 style) */}
         <section className="bg-white p-8 md:p-12 border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:scale-[1.01] transition-transform">
           <h2 className="font-brand text-2xl mb-4 uppercase text-black tracking-widest border-b-2 border-black/10 pb-2">Latest Activity</h2>
           <p className="font-bebas text-xl md:text-2xl text-black font-bold uppercase tracking-widest leading-snug">{latestUpdates}</p>
+        </section>
+
+        {/* YouTube Embed Box */}
+        <section className="bg-black/20 p-8 md:p-12 border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] flex flex-col items-center gap-6">
+          <h2 className="font-brand text-3xl uppercase text-white self-start border-b-2 border-white/20 w-full pb-2">Videos</h2>
+          <div className="w-full aspect-video border-2 border-black overflow-hidden">
+            <iframe 
+              width="100%" 
+              height="100%" 
+              src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" 
+              title="YouTube video player" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerPolicy="strict-origin-when-cross-origin" 
+              allowFullScreen
+            ></iframe>
+          </div>
         </section>
 
         {/* Socials & Contact (Concept 10 style) */}
@@ -150,11 +181,11 @@ export default function HomePage() {
       </main>
 
       {/* Sticky Footer Ticker (Concept 8 style) */}
-      <footer className="fixed bottom-0 left-0 w-full bg-black text-white py-4 border-t-4 border-black overflow-hidden whitespace-nowrap z-50 shadow-[0_-4px_20px_rgba(0,0,0,0.5)]">
+      <footer className="fixed bottom-0 left-0 w-full bg-black text-white py-3 border-t-4 border-black overflow-hidden whitespace-nowrap z-50">
         <motion.div 
-          className="inline-block font-brand text-3xl md:text-4xl uppercase tracking-[0.2em] select-none"
+          className="inline-block font-brand text-2xl md:text-3xl uppercase tracking-[0.2em] select-none"
           animate={{ x: [0, -2000] }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
         >
           {tickerText}{tickerText}{tickerText}{tickerText}
         </motion.div>
