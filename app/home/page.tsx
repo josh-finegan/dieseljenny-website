@@ -87,10 +87,10 @@ export default function HomePage() {
         </section>
 
         {/* Bandcamp Embed Box - Simplified */}
-        <section className="w-fit mx-auto border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden leading-[0]">
+        <section className="w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden leading-[0]">
           <iframe 
-            style={{ border: 0, width: '350px', height: '470px' }} 
-            src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/" 
+            style={{ border: 0, width: '100%', height: '208px' }} 
+            src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=333333/artwork=small/transparent=true/" 
             seamless
           >
             <a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a>
