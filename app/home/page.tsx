@@ -108,7 +108,7 @@ export default function HomePage() {
           <iframe 
             width="100%" 
             height="100%" 
-            src="https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q" 
+            src="https://www.youtube-nocookie.com/embed/0e4hgnN1BLM?si=VE-1Na4x8Yv_sNy8" 
             title="YouTube video player" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
