@@ -66,16 +66,58 @@ export default function HomePage() {
     <div className="min-h-screen w-full flex flex-col items-center py-20 px-6 transition-colors duration-[2000ms] pb-32" style={{ backgroundColor: bgColor }}>
       
       {/* Header Stack (Concept 10 style) */}
-      <header className="mb-20 text-center">
-        <Link 
-          href="/" 
-          onMouseEnter={() => playSting('diesel')}
-          className="font-brand text-[14vw] md:text-[9vw] uppercase text-white leading-none hover:scale-105 transition-transform inline-block select-none" 
-          style={{ textShadow: '4px 4px 0px black' }}
-        >
-          DIESEL JENNY
-        </Link>
-        <div className="font-bebas text-2xl md:text-3xl text-white italic mt-2 opacity-90 select-none">'Like a rat up a drainpipe!'</div>
+      <header className="mb-20 text-center flex flex-col items-center gap-6">
+        <div>
+          <Link 
+            href="/" 
+            onMouseEnter={() => playSting('diesel')}
+            className="font-brand text-[14vw] md:text-[9vw] uppercase text-white leading-none hover:scale-105 transition-transform inline-block select-none" 
+            style={{ textShadow: '4px 4px 0px black' }}
+          >
+            DIESEL JENNY
+          </Link>
+          <div className="font-bebas text-2xl md:text-3xl text-white italic mt-2 opacity-90 select-none">'Like a rat up a drainpipe!'</div>
+        </div>
+
+        <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+          <a 
+            href={socialLinks.bandcamp} 
+            target="_blank" 
+            onMouseEnter={() => playSting('bandcamp')}
+            className="text-white hover:text-black transition-all transform hover:scale-125"
+          >
+            <BandcampIcon size={36} />
+          </a>
+          <a 
+            href={socialLinks.instagram} 
+            target="_blank" 
+            onMouseEnter={() => playSting('instagram')}
+            className="text-white hover:text-black transition-all transform hover:scale-125"
+          >
+            <Instagram size={36} />
+          </a>
+          <a 
+            href={socialLinks.youtube} 
+            target="_blank" 
+            className="text-white hover:text-black transition-all transform hover:scale-125"
+          >
+            <Youtube size={36} />
+          </a>
+          <a 
+            href={socialLinks.tiktok} 
+            target="_blank" 
+            className="text-white hover:text-black transition-all transform hover:scale-125"
+          >
+            <TikTokIcon size={36} />
+          </a>
+          <a 
+            href={socialLinks.facebook} 
+            target="_blank" 
+            className="text-white hover:text-black transition-all transform hover:scale-125"
+          >
+            <Facebook size={36} />
+          </a>
+        </nav>
       </header>
 
       <main className="w-full max-w-2xl flex flex-col gap-16">
@@ -130,46 +172,6 @@ export default function HomePage() {
 
         {/* Socials & Contact (Concept 10 style) */}
         <section className="flex flex-col items-center gap-10 pt-10">
-          <nav className="flex flex-wrap justify-center gap-x-12 gap-y-6">
-            <a 
-              href={socialLinks.bandcamp} 
-              target="_blank" 
-              onMouseEnter={() => playSting('bandcamp')}
-              className="text-white hover:text-black transition-all transform hover:scale-125"
-            >
-              <BandcampIcon size={44} />
-            </a>
-            <a 
-              href={socialLinks.instagram} 
-              target="_blank" 
-              onMouseEnter={() => playSting('instagram')}
-              className="text-white hover:text-black transition-all transform hover:scale-125"
-            >
-              <Instagram size={44} />
-            </a>
-            <a 
-              href={socialLinks.youtube} 
-              target="_blank" 
-              className="text-white hover:text-black transition-all transform hover:scale-125"
-            >
-              <Youtube size={44} />
-            </a>
-            <a 
-              href={socialLinks.tiktok} 
-              target="_blank" 
-              className="text-white hover:text-black transition-all transform hover:scale-125"
-            >
-              <TikTokIcon size={44} />
-            </a>
-            <a 
-              href={socialLinks.facebook} 
-              target="_blank" 
-              className="text-white hover:text-black transition-all transform hover:scale-125"
-            >
-              <Facebook size={44} />
-            </a>
-          </nav>
-          
           <div className="flex flex-col items-center gap-2 text-white font-bebas text-2xl md:text-3xl">
             <div className="flex items-center gap-3 bg-black/40 px-6 py-2 border-2 border-white/20 select-all">
               <Mail className="opacity-70" />
