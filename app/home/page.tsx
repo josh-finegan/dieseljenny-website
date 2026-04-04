@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Youtube, Facebook, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { bio, latestUpdates, contactEmail, socialLinks, phrases } from '../../lib/config';
+import { bio, latestUpdates, contactEmail, socialLinks, phrases, embeds } from '../../lib/config';
 
 const COLORS = ['#FF4000', '#0057FF', '#FF00C1', '#22E4AC'];
 
@@ -86,16 +86,22 @@ export default function HomePage() {
           <p className="font-bebas text-2xl md:text-3xl leading-relaxed text-white tracking-wide">{bio}</p>
         </section>
 
-        {/* Bandcamp Embed Box - Simplified */}
-        <section className="w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden leading-[0]">
-          <iframe 
-            style={{ border: 0, width: '100%', height: '208px' }} 
-            src="https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=333333/artwork=small/transparent=true/" 
-            seamless
-          >
-            <a href="https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil">Dexy Heartbeat/Gerbil by Diesel Jenny</a>
-          </iframe>
-        </section>
+        {/* Music Section (Bandcamp Embeds) */}
+        <div className="flex flex-col gap-10">
+          <h2 className="font-brand text-3xl uppercase text-white text-center" style={{ textShadow: '2px 2px 0px black' }}>Music</h2>
+          {embeds.bandcamp.map((item, idx) => (
+            <section key={idx} className="w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-white overflow-hidden leading-[0]">
+              <iframe 
+                style={{ border: 0, width: '100%', height: '120px' }} 
+                src={item.src} 
+                seamless
+                title={item.title}
+              >
+                <a href={item.link}>{item.title}</a>
+              </iframe>
+            </section>
+          ))}
+        </div>
 
         {/* Latest Updates Box (Concept 6 style) */}
         <section className="bg-white p-8 md:p-12 border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:scale-[1.01] transition-transform">
@@ -103,19 +109,24 @@ export default function HomePage() {
           <p className="font-bebas text-xl md:text-2xl text-black font-bold uppercase tracking-widest leading-snug">{latestUpdates}</p>
         </section>
 
-        {/* YouTube Embed Box - Simplified */}
-        <section className="w-full aspect-video border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-black overflow-hidden leading-[0]">
-          <iframe 
-            width="100%" 
-            height="100%" 
-            src="https://www.youtube-nocookie.com/embed/0e4hgnN1BLM?si=VE-1Na4x8Yv_sNy8" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerPolicy="strict-origin-when-cross-origin" 
-            allowFullScreen
-          ></iframe>
-        </section>
+        {/* Videos Section (YouTube Embeds) */}
+        <div className="flex flex-col gap-10">
+          <h2 className="font-brand text-3xl uppercase text-white text-center" style={{ textShadow: '2px 2px 0px black' }}>Videos</h2>
+          {embeds.youtube.map((item, idx) => (
+            <section key={idx} className="w-full aspect-video border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] bg-black overflow-hidden leading-[0]">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                src={item.src} 
+                title={item.title} 
+                frameBorder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                referrerPolicy="strict-origin-when-cross-origin" 
+                allowFullScreen
+              ></iframe>
+            </section>
+          ))}
+        </div>
 
         {/* Socials & Contact (Concept 10 style) */}
         <section className="flex flex-col items-center gap-10 pt-10">

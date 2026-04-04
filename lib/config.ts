@@ -22,8 +22,37 @@ export const contactEmail = "dieseljenny@proton.me";
 export const latestUpdates = "DJEN001 OUT NOW VIA BANDCAMP. REPRESS COMING SOON. NEXT WHITE LABEL SERIES IN THE WORKS.";
 
 export const embeds = {
-    bandcamp: "https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=333333/linkcol=ffffff/tracklist=false/transparent=true/",
-    youtube: "https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q&modestbranding=1&controls=0"
+    bandcamp: [
+        {
+            title: "FOOTMAHI 2025 - Needed Me",
+            src: "https://bandcamp.com/EmbeddedPlayer/album=1983693681/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=830546927/transparent=true/",
+            link: "https://thebigfreshcollective.bandcamp.com/album/footmahi-2025"
+        },
+        {
+            title: "RRR Vol 1. - mol out the window",
+            src: "https://bandcamp.com/EmbeddedPlayer/album=2509250686/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/track=1795635604/transparent=true/",
+            link: "https://realrunglerecords.bandcamp.com/album/rrr-vol-1"
+        },
+        {
+            title: "Dexy Heartbeat / Gerbil",
+            src: "https://bandcamp.com/EmbeddedPlayer/album=3807677691/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/",
+            link: "https://dieseljenny.bandcamp.com/album/dexy-heartbeat-gerbil"
+        }
+    ],
+    youtube: [
+        {
+            title: "RDU Live To Air",
+            src: "https://www.youtube.com/embed/ox51HQiDMiE?si=6ygYzp874Z0jmT8X"
+        },
+        {
+            title: "Dexy Heartbeat video",
+            src: "https://www.youtube.com/embed/6I3w-xRergs?si=iUfbDbHhb789Lh5Q"
+        },
+        {
+            title: "Synthetic Children x Diesel Jenny tour diary",
+            src: "https://www.youtube.com/embed/0e4hgnN1BLM?si=h5RcmE42kM7RATjf"
+        }
+    ]
 };
 
 export const audioStings = [
